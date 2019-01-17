@@ -14,13 +14,11 @@ ActiveRecord::Schema.define(version: 2019_01_17_112208) do
 
   create_table "authors", force: :cascade do |t|
     t.string "email"
-    t.string "first_name"
-    t.string "last_name"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
     t.datetime "date_of_birth"
-    t.integer "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_authors_on_author_id"
   end
 
   create_table "authors_books", id: false, force: :cascade do |t|
@@ -31,17 +29,21 @@ ActiveRecord::Schema.define(version: 2019_01_17_112208) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "description"
-    t.string "isbn", default: "f"
-    t.boolean "visibility"
+    t.string "isbn", null: false
+    t.boolean "visibility", default: false
     t.datetime "creation_date"
+    t.integer "author_id"
+    t.integer "publisher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_books_on_author_id"
+    t.index ["publisher_id"], name: "index_books_on_publisher_id"
   end
 
   create_table "publishers", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "telephone"
     t.string "address"
     t.datetime "created_at", null: false
