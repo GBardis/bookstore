@@ -17,5 +17,5 @@ end
 authors = Author.all
 publishers = Publisher.all
 50.times do
-  Book.create(title: Faker::Book.unique.title, description: Faker::Lorem.unique.paragraphs(2).join(' '), isbn: Faker::Code.unique.isbn, visibility: [true, false].sample, creation_date: time_rand, authors: [authors.sample], publisher_id: publishers.sample.id)
+  Book.create(title: Faker::Book.unique.title, description: Faker::Lorem.unique.paragraphs(2).join(' '), isbn: Faker::Code.unique.isbn, visibility: [0, 1].sample, creation_date: time_rand, authors: [authors.sample], publisher_id: publishers.sample.id)
 end

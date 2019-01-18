@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2019_01_17_112208) do
     t.string "title", null: false
     t.string "description"
     t.string "isbn", null: false
-    t.boolean "visibility", default: false
+    t.integer "visibility", default: 1
     t.datetime "creation_date"
     t.integer "publisher_id"
     t.datetime "created_at", null: false
