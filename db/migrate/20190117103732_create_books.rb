@@ -6,7 +6,6 @@ class CreateBooks < ActiveRecord::Migration[5.2]
       t.string :isbn, unique: true, null: false
       t.boolean :visibility, default: false
       t.datetime :creation_date
-      t.belongs_to :author, index: true
       t.belongs_to :publisher, index: true
       t.timestamps
     end
