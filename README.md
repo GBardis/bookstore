@@ -53,7 +53,7 @@
 }
 ```
 7. POST http://localhost:3000/publishers (create)
-### Example json to create to new publisher
+## Example json to create to new publisher
 ```javascript
 {
   "name": "Pearson",
