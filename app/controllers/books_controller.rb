@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[show new update delete]
+  before_action :set_book, only: %i[show new update destroy]
 
   def index
-    books = Book.includes(:authors).where('publisher_id != 0')
+    books = Book.includes(:authors).where('publisher_id != ? AND visibility = ?', 0, true)
                 .order('authors.last_name ASC')
                 .sort do |a, b|
       -(a.authors.first.id <=> b.authors.first.id)
@@ -18,11 +18,26 @@ class BooksController < ApplicationController
     render json: enrich_book(@book), status: :ok
   end
 
-  def create; end
+  def create
+    book = Book.new(book_params)
+    if book.save
+      render json: book, status: :ok
+    else
+      render json: { errors: book.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
-  def update; end
+  def update
+    if @book.update(book_params)
+      render json: @book, status: :ok
+    else
+      render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
-  def destroy; end
+  def destroy
+    render json: @book, status: :ok if @book.destroy
+  end
 
   private
 
@@ -41,5 +56,9 @@ class BooksController < ApplicationController
     book['address'] = book_publisher.address
     book.except!('created_at', 'update_at', 'visibility')
     book
+  end
+
+  def book_params
+    params.permit(:id, :title, :description, :isbn, :visibility, :creation_date, :publisher_id, author_ids: [])
   end
 end
