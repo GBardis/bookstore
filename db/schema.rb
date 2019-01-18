@@ -34,11 +34,9 @@ ActiveRecord::Schema.define(version: 2019_01_17_112208) do
     t.string "isbn", null: false
     t.boolean "visibility", default: false
     t.datetime "creation_date"
-    t.integer "author_id"
     t.integer "publisher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["publisher_id"], name: "index_books_on_publisher_id"
   end
 
