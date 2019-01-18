@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show update destroy]
 
   def index
-    books = Book.includes(:authors).where('publisher_id != ? AND visibility = ?', 0, 1)
+    books = Book.includes(:authors).where('publisher_id != ? AND visibility = ?', 0, 0)
                 .order('authors.last_name ASC')
                 .sort do |a, b|
       -(a.authors.first.id <=> b.authors.first.id)
@@ -10,12 +10,12 @@ class BooksController < ApplicationController
     books.each do |book|
       book.description = book.description.truncate(100, omission: '...')
     end
-    render json: books, except: %i[created_at update_at visibility],
+    render json: enrich_index_response(books),
            status: :ok
   end
 
   def show
-    render json: enrich_show_response(@book), except: %i[created_at update_at visibility], status: :ok
+    render json: enrich_show_response(@book), status: :ok
   end
 
   def create
@@ -49,22 +49,25 @@ class BooksController < ApplicationController
     book_author = book.authors
     book_publisher = book.publisher
     book = book.attributes
-    book['authors_full_name'] = book_author.first.full_name
-    book['email'] = book_author.first.email
-    book['date_of_birth'] = book_author.first.date_of_birth
+    book['author_full_name'] = book_author.first.full_name
+    book['author_email'] = book_author.first.email
+    book['author_date_of_birth'] = book_author.first.date_of_birth
     book['publisher_name'] = book_publisher.name
-    book['address'] = book_publisher.address
+    book['publisher_address'] = book_publisher.address
+    book.except!('created_at', 'updated_at', 'visibility', 'publisher_id', 'id')
     book
   end
 
   def enrich_index_response(books)
     book_collection = []
     books.each do |book|
-      author = book.author.first
+      author = book.authors.first
       book = book.attributes
-      book['authors_full_name'] = author.full_name
+      book['author_full_name'] = author.full_name
+      book.except!('created_at', 'updated_at', 'visibility', 'publisher_id', 'id', 'creation_date')
       book_collection << book
     end
+    book_collection
   end
 
   def book_params
