@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[show new update destroy]
+  before_action :set_book, only: %i[show update destroy]
 
   def index
     books = Book.includes(:authors).where('publisher_id != ? AND visibility = ?', 0, true)
