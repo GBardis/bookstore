@@ -7,4 +7,8 @@ class Book < ApplicationRecord
   validates :isbn, uniqueness: true
   validates :title, uniqueness: true
   validates :publisher, :authors, presence: true
+
+  def creation_date
+    self[:creation_date].strftime('%d/%m/%Y')
+  end
 end
