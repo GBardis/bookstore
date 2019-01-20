@@ -20,7 +20,7 @@
   "title": "The Lord of the Rings: The Fellowship of the Ring ",
   "description": "Pariatur molestias ut. Libero odit numquam. Porro omnis odio. Amet sed sunt. Ut doloremque voluptatibus. Harum voluptas facilis.",
   "isbn": "926707366-4",
-  "visibility": true,
+  "visibility": "visible",
   "creation_date": "Thu, 01 Jan -4712 00:00:00 UTC +00:00",
   "author_ids": [1, 2, 3],
   "publisher_id": 5
@@ -34,7 +34,7 @@
   "title": "The Lord of the Rings: Return Of King",
   "description": "Ab sint dignissimos. Ad laudantium deleniti. Veritatis doloremque animi. Voluptas esse sunt. Aliquam nulla iure. Eos est voluptatem.",
   "isbn": "926707366-4",
-  "visibility": true,
+  "visibility": "visible",
   "creation_date": "Thu, 01 Jan -4712 00:00:00 UTC +00:00",
   "author_ids": [4, 5, 6],
   "publisher_id": 5
